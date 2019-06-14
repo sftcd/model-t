@@ -1,0 +1,150 @@
+
+# 20190613 call on Internet threat model
+
+- Logistics:
+    - Dramatis Personae: Jari, Brian, Stephen, Ted 
+    - time: 20190613 1800 CEST
+    - url: https://meet.google.com/ogt-byti-jki?hs=122
+
+SF notes of call are at the bottom...
+
+- possible agenda for the call:
+    - quickly skim (in 5 min) the points below to see if going through
+      things in this order is sensible (or haggle over that via 
+      email ahead of time) 
+    - if so, do so (editing as we go in some etherpad or similar)
+    - if not, do what?
+    - AOB:-)
+
+- main drafts/inputs (take the references from these as stated):
+    - BCP72/RFC3552
+    - https://tools.ietf.org/html/draft-farrell-etm
+    - https://tools.ietf.org/html/draft-arkko-arch-internet-threat-model
+    - what else (not referenced from any of the above)?
+    - anything deserve to be promoted from referred-to by one of 
+      the above?
+    - anything else from DEDR?
+
+- a couple of principles/starting points (to see if we agree with 'em):
+    - This bit of BCP72/RFC3552 remains correct: "we assume that the
+      attacker has nearly complete control of the communications
+      channel"
+    - The bit that's changed is that the endpoints aren't as trusted as
+      was the case in 2003
+    - Another bit that's changed is that assume there are attackers actively
+      cross-correlating flows across many different channels  
+
+- possible short-term process (may be better at end of call):
+    - develop this work via a set of (weekly?) concalls over the next
+      ~month with this set of folks (anyone else sorely needed right
+      now?)
+    - document results for IAB consumption however seems best
+      (presentation, I-D, whatever) and present to IAB Sunday of
+      @IETF105 (could be joint topic with IESG maybe, or just invite in
+      Sec ADs)
+    - propse continuing the work in a (re-populated?) secpriv programme
+      or close secpriv and start a new programme (with most work done
+      on open list) 
+        - would need to chat with MT, and secpriv list about that first
+          of course
+    - consider a side-meeting @IETF105? (not sure) 
+
+- possible new protocol design recommendatons to explore (as potential
+  additions to BCP72, should something end up garnering IETF consensus):
+    - consider protocol abuse-cases as well as use-cases
+    - consider that all configuration could be on a VM with an
+      adversarial dom0 or equivalent
+    - consider that all stored data will leak if we just wait long
+      enough
+    - consider that all hosts will be compromised if we just wait long
+      enough
+    - consider the number of interactions in which endpoints engage and
+      the (overwhelming) probability that endpoints end up interacting
+      with compromised peers
+
+- examples of possible protocol design changes resulting from
+  considerations above (in same order, not all examples of success
+  outcomes;-):
+    - remove or avoid a new tracking capability; QUIC connection ID
+    - post key compromise requirements in MLS
+    - use emphemeral identifiers that aren't easily correlated over
+      different sessions even if typical session logging is done (HTTP
+      cookies -> not cookies)
+    - ensure enrollment can be re-done after factory-reset (ACME)
+    - provide ways to report on summaries/statistics (TLS-RPT) 
+    
+
+- Two good points not easy to whack into the above from Ted:
+
+    - An additional complication to your trust point is that many services and
+      a number of applications aren't resident in a single network node any
+      more.  For IoT devices, the application might be resident in the
+      Sensor/Hub/Cloud, and the communications among them have some odd boundaries as
+      a result (the trust boundary looks more like IPC than end-to-end
+      communication).  For services, CDNs, load balancers, and service function
+      chaining have all pretty much exploded the "website on a server" view of the
+      world.  You add that to your "all endpoints will be compromised eventually"
+      point and it gets worse.
+
+    - Oh, and don't get me started about the effort to keep containers and VMs
+      in ignorance of their actual topology and relationship to host systems.
+
+Notes:
+- group: start small, hold pen, then try drag others in
+- BT/TH: better assume attacker controls comms environment (not just
+	channel,endpoint)
+- TH: we may be assuming something is h/w but it's s/w on some bad host
+- JA: DEDR, some validation that work here needed there; we *are* all crazy:-)
+	- some things need to be framed in an architectural fashion, e.g.
+	Andrew argued about e2e principle; such a framing would be useful;
+	e.g. real-end ideas in Jari's draft
+- TH: does anyone show you when someone else is in control of the buffer in
+  a (set of) flows, e.g. kernel mgr <here>, router <there>... e.g. if
+  NFV or SFC used, about 4 people control the buffer for each in/out
+- SF: web visualations of things with which you interact exist, not sure 
+  about lower layer 
+- JA: not just a router, other places see cleartext
+- TH: routers see/can-infer meta-data
+- JA: we have work on stuff like that e.g. ESNI
+- BT: getting there for web, but elsewhere tuples are still v. useful
+	or else BGP hijacking wouldn't be so attractive
+- JA: we still need comsec improvements, and more
+- BT: encryption of data at rest - we may have existing IETF statements on
+  that...
+- JA: in .is, we wanted to document the case of closed networks that are
+  not - a possible I-D (SF forgot that entirely, it's a good thing though)
+- BT: Some of the list of design recs aren't IETF stuff, but for other folks
+- BT: maybe these interdependencies lead to things that are too complex,
+  but that can lead to more consolidation
+- JA: missing data minimisation from design rec list
+- TH: not just server minimisation, also client oughtn't ask for so much
+  'cause that'll also leak, maybe FF trying to do this kind of thing, not
+  asking for a pixel tracker unless there's something that needs that
+  URL de-ref'd; good result might be some tracking doesn't occur due
+  to such lazy evaluation in browser
+- JA: web != client-server, but also ad networks etc.
+- JA: recent FF privacy enhancements as an example, not sure about QUIC
+  connection ID
+- TH: QUIC conn id - each side has indpendent value it uses with other,
+  rather than one side picking, so can lead to even large structured IDs
+  that are good for load balancing can't easily be used to track
+- JA: QUIC provides good design patterns for COMSEC, but we're trying to
+  go beyond now, so...
+- TH: QUIC conn id design pattern also considers internal paths in ways 
+  that try not expose state that oughtn't be visible to n/w path so maybe
+  does go beyond COMSEC
+- possible "thanks" message for privsec: thanks, looks like we're done
+  in our present form, the iab are starting in on some related but 
+  stuff related to the  impact of compromised communications 
+  environments which is a bit different (more than comsec) but does 
+  include sec/priv issues so we will be getting back in a bit when
+  we've figured that out a bit
+- we'll use this slot for chats, except next week (ask Jari when works
+  next week) 
+
+- SF action: make git repo, we'll work on some MD on that, I-D not yet
+- SF action: schedule an IAB room side meeting for this
+- SF action: check the privsec "thanks" framing with MT + this group
+  and see if MT wants to send that thanks message
+- SF action: make sure someone else gets all the actions next time:-)
+
