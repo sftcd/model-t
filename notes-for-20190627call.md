@@ -19,6 +19,9 @@ How about if, instead, that said:
 
 V. small change in words, maybe enough to be interesting though?
 
+Perhaps: resurrect doc from stackevo that talks about no end-systems being the 
+right concept.
+
 ## "not closed" I-D
 
 At the IAB retreat we discussed someone writing a short I-D 
