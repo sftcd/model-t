@@ -14,7 +14,7 @@ Two thoughts for the day...
 
 How about if, instead, that said:
 
-            In general, we assume that one of the end-systems engaging in a
+            In general, we assume that one of the protocol engines engaging in a
             protocol exchange has not been compromised.
 
 V. small change in words, maybe enough to be interesting though?
