@@ -15,9 +15,11 @@ Two thoughts for the day...
 How about if, instead, that said:
 
             In general, we assume that one of the protocol engines engaging in a
-            protocol exchange has not been compromised.
-
-V. small change in words, maybe enough to be interesting though?
+            protocol exchange has not been compromised at the run-time of the 
+            exchange.
+            
+V. small change in words, maybe enough to be interesting though? Not necessarily
+as a bit of final text, but more as a jumping off point for later analysis.
 
 Perhaps: resurrect doc from stackevo that talks about end-systems no longer
 being the right concept.
