@@ -23,7 +23,7 @@ Some take-aways:
 - some of the concepts, e.g. bearer-token, do generalise nicely but it's
   not clear how much of it would - could be a bunch of work to figure
   that out - might be a useful exercise to find a protocol that's as
-  "far" from OAuth as possible and see what maps well
+  "far" from OAuth as possible and see what maps well, maybe BGP!
 - OAuth, given it's nature, does consider deployment as a specifically
   different thing from implementation.
 - The big catalog of attacks in the RFC probably has lots of lessons,
