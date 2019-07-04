@@ -29,3 +29,6 @@ Some take-aways:
 - The big catalog of attacks in the RFC probably has lots of lessons,
   but I wonder how comprehensible it's been even for OAuth implementers,
   but we could ask!
+
+Jari has started to write about closed networks
+- See Section 4.2 in https://arkko.com/ietf/iab/draft-arkko-arch-internet-threat-model.diff.html
