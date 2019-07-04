@@ -1,7 +1,7 @@
 
 # More reading than writing this time...
 
-I been looking at bit at [rfc6819](https://tools.ietf.org/html/rfc6819),
+I've been looking at bit at [rfc6819](https://tools.ietf.org/html/rfc6819),
 the OAuth threat model. I've not finished re-reading it.
 
 Some take-aways:
